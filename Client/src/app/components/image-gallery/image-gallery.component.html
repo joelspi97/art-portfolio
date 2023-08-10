@@ -1,0 +1,28 @@
+<div *ngIf="!artPieces">Cargando...</div>
+
+<ul class="list-group" *ngIf="artPieces">
+  <li class="list-group-item text-center" *ngFor="let artPiece of artPieces">
+    <h2>title: {{ artPiece.title }}</h2>
+    <p class="my-2"><strong>Description:</strong> 
+      <br />
+      {{ artPiece.description }}
+    </p>
+
+    <div class="d-flex align-items-center my-2">
+      <span class="d-inline-block mr-3"><strong>Created at:</strong> {{ artPiece.createdAt | date }}</span>
+      <span><strong>Id:</strong> {{ artPiece.id }}</span>
+    </div>
+
+    <div>
+      <h3>Mediums:</h3>
+  
+      <ul>
+        <li class="text-left" *ngFor="let medium of artPiece.mediums">{{ medium.name }}</li>        
+      </ul> 
+    </div>
+
+    <a class="link" routerLink="/detalle-imagen/{{ artPiece.id }}">Ver detalles...</a>
+  </li>
+</ul>
+
+<a class="btn btn-primary" routerLink="/formulario-imagenes">Añadir trabajo nuevo</a>
