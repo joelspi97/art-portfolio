@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArtPiece } from 'src/app/models/ArtPiece';
+import { ArtPieceType } from 'src/app/models/ArtPieceType';
 import { ArtPieceService } from 'src/app/services/art-piece.service';
 
 @Component({
@@ -10,21 +11,13 @@ import { ArtPieceService } from 'src/app/services/art-piece.service';
 })
 export class ImageGalleryComponent implements OnInit {
   public artPieces: ArtPiece[] | null = null;
-  public artType: string = '';
 
-  constructor(private artPieceService: ArtPieceService, private route: ActivatedRoute) {
-    this.artPieceService.currentArtPieces$.subscribe({
-      next: (currentArtPieces: ArtPiece[] | null): void => { this.artPieces = currentArtPieces }
-    })
-  }
+  constructor(public artPieceService: ArtPieceService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.artType = params.get('type') || '';  
-
-      if (this.artPieces) {
-        this.artPieces = this.artPieces.filter(artPiece => artPiece.type.name === this.artType);
-      }
+      let artPieceType: string = params.get('type') || '';
+      this.artPieceService.getAllArtPieces(artPieceType).subscribe();
     });
   }
 }

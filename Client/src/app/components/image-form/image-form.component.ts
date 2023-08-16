@@ -7,6 +7,8 @@ import { ArtPieceService } from 'src/app/services/art-piece.service';
 import { take } from 'rxjs/operators';
 import { ArtPiece } from 'src/app/models/ArtPiece';
 import { Router } from '@angular/router';
+import { ArtPieceType } from 'src/app/models/ArtPieceType';
+import { TypeService } from 'src/app/services/type.service';
 
 @Component({
   selector: 'app-image-form',
@@ -15,17 +17,19 @@ import { Router } from '@angular/router';
 })
 export class ImageFormComponent implements OnInit {
   public mediums: Medium[] = [];
+  public types: ArtPieceType[] =[]; 
   public newArtPieceForm: FormGroup = new FormGroup({});
 
   constructor(
-    private mediumService: MediumService, 
-    private formBuilder: FormBuilder,
+    public typeService: TypeService,
+    public mediumService: MediumService, 
     private artPieceService: ArtPieceService,
+    private formBuilder: FormBuilder,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getMediums();
+    this.mediumService.getMediums();
     this.initializeForm();
   }
 
@@ -62,14 +66,8 @@ export class ImageFormComponent implements OnInit {
       title: [ '', [ Validators.required, Validators.minLength(5), Validators.maxLength(40) ] ],
       description: [ '' ],
       createdAt: [ '', Validators.required ],
+      typeId: [ '', Validators.required ],
       mediumIds: new FormArray([], Validators.required)
     });
   } 
-
-  private getMediums(): void {
-    this.mediumService.getMediums().subscribe({
-      next: (response: Medium[]): void => { this.mediums = response; },
-      error: (error: HttpErrorResponse): void => console.log(error.message)
-    });
-  }
 }

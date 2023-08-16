@@ -13,6 +13,9 @@ namespace art_portfolio_api.Mappings
 
             // Mediums 
             CreateMap<Medium, MediumDTO>().ReverseMap();
+
+            // Types 
+            CreateMap<ArtPieceType, ArtPieceTypeDTO>().ReverseMap();
         }
     }
 }

@@ -4,28 +4,27 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ArtPiece } from '../models/ArtPiece';
 import { ArtPieceRequestDTO } from '../models/ArtPieceRequestDTO';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtPieceService {
   private baseUrl: string = environment.baseUrl;
-  private artPiecesSource = new BehaviorSubject<ArtPiece[] | null>(null);
-  public currentArtPieces$: Observable<ArtPiece[] | null> = this.artPiecesSource.asObservable();
+  private currentArtPiecesSource = new BehaviorSubject<ArtPiece[] | null>(null);
+  public currentArtPieces$ = this.currentArtPiecesSource.asObservable();
 
-  private constructor(private http: HttpClient) {
-    this.getAllArtPieces().pipe(take(1)).subscribe();
-  } 
+  private constructor(private http: HttpClient) { } 
 
   public uploadArtPiece(newArtPiece: ArtPieceRequestDTO): Observable<ArtPiece> {
     return this.http.post<ArtPiece>(this.baseUrl + 'ArtPieces', newArtPiece);
   }
 
-  private getAllArtPieces(): Observable<void> {
-    return this.http.get<ArtPiece[]>(this.baseUrl + 'ArtPieces').pipe(
-      map((artPieces: ArtPiece[]) => {
-        this.artPiecesSource.next(artPieces);
+  public getAllArtPieces(artPieceType: string): Observable<void> {
+    return this.http.get<ArtPiece[]>(`${ this.baseUrl }ArtPieces?type=${ artPieceType }`).pipe(
+      map((response: ArtPiece[]) => {
+        const artPieces = response;
+        this.currentArtPiecesSource.next(artPieces);
       })
     );
   }

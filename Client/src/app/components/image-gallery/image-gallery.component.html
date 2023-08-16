@@ -1,20 +1,22 @@
-<div *ngIf="!artPieces">Cargando...</div>
+<div *ngIf="!(artPieceService.currentArtPieces$ | async)">Cargando...</div>
 
-<ul class="list-group" *ngIf="artPieces">
-  <li class="list-group-item text-center" *ngFor="let artPiece of artPieces">
+<div *ngIf="(artPieceService.currentArtPieces$ | async)?.length === 0 ">Todavía no hay obras cargadas para esta sección.</div>
+
+<ul class="list-group mb-5 d-flex flex-row flex-wrap" *ngIf="(artPieceService.currentArtPieces$ | async) as artPieces ">
+  <li class="list-group-item text-center mx-4" *ngFor="let artPiece of artPieces">
     <h2>title: {{ artPiece.title }}</h2>
-    <p class="my-2"><strong>Description:</strong> 
+    <p class="my-3"><strong>Description:</strong> 
       <br />
       {{ artPiece.description }}
     </p>
 
-    <div class="d-flex align-items-center my-2">
+    <div class="d-flex align-items-center my-3">
       <span class="d-inline-block mr-3"><strong>Created at:</strong> {{ artPiece.createdAt | date }}</span>
       <span><strong>Id:</strong> {{ artPiece.id }}</span>
     </div>
 
-    <div>
-      <h3>Mediums:</h3>
+    <div class="mb-3">
+      <h3>Medios:</h3>
   
       <ul>
         <li class="text-left" *ngFor="let medium of artPiece.mediums">{{ medium.name }}</li>        
@@ -25,4 +27,4 @@
   </li>
 </ul>
 
-<a class="btn btn-primary" routerLink="/formulario-imagenes">Añadir trabajo nuevo</a>
+<a class="btn btn-primary w-100" routerLink="/formulario-imagenes">Añadir trabajo nuevo</a>

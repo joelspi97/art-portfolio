@@ -8,10 +8,11 @@ import { ImageFormComponent } from './components/image-form/image-form.component
 import { WrittenFormComponent } from './components/written-form/written-form.component';
 import { ImageDetailComponent } from './components/image-detail/image-detail.component';
 import { WrittenDetailComponent } from './components/written-detail/written-detail.component';
+import { TypeNotFoundGuard } from './guards/type-not-found.guard';
 
 const routes: Routes = [
   { path: '', component: ArtistIntroComponent },
-  { path: 'galeria-imagenes/:medium', component: ImageGalleryComponent },
+  { path: 'galeria-imagenes/:type', component: ImageGalleryComponent, canActivate: [ TypeNotFoundGuard ] },
   { path: 'galeria-escritos/:type', component: WrittenGalleryComponent },
   { path: 'formulario-imagenes', component: ImageFormComponent },
   { path: 'formulario-escritos', component: WrittenFormComponent },
