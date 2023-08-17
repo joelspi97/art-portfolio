@@ -1,4 +1,5 @@
 using art_portfolio_api.Data;
+using art_portfolio_api.Helpers;
 using art_portfolio_api.Interfaces;
 using art_portfolio_api.Mappings;
 using art_portfolio_api.Repositories;
@@ -19,6 +20,7 @@ namespace art_portfolio_api.Extensions
                 options.UseSqlServer(config.GetConnectionString("ArtPortfolioConnectionString")));
 
             services.AddAutoMapper(typeof(AutoMapperProfiles));
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
             // Repositories 
             services.AddScoped<IArtPiecesRepository, ArtPiecesRepository>();

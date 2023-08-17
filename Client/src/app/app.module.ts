@@ -16,6 +16,7 @@ import { ImageFormComponent } from './components/image-form/image-form.component
 import { WrittenFormComponent } from './components/written-form/written-form.component';
 import { ImageDetailComponent } from './components/image-detail/image-detail.component';
 import { WrittenDetailComponent } from './components/written-detail/written-detail.component';
+import { ImageUpdateFormComponent } from './components/image-update-form/image-update-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { WrittenDetailComponent } from './components/written-detail/written-deta
     ImageFormComponent,
     WrittenFormComponent,
     ImageDetailComponent,
-    WrittenDetailComponent
+    WrittenDetailComponent,
+    ImageUpdateFormComponent
   ],
   imports: [
     BrowserModule,

@@ -8,5 +8,6 @@ namespace art_portfolio_api.Models.DomainModels
         public DateOnly CreatedAt { get; set; }
         public List<Medium> Mediums { get; set; }
         public ArtPieceType Type { get; set; }
+        public ArtPiecePhoto ArtPiecePhoto { get; set; }
     }
 }

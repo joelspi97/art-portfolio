@@ -20,6 +20,10 @@ export class ArtPieceService {
     return this.http.post<ArtPiece>(this.baseUrl + 'ArtPieces', newArtPiece);
   }
 
+  public updateArtPiece(existingArtPiece: ArtPieceRequestDTO, id: number): Observable<ArtPiece> {
+    return this.http.put<ArtPiece>(`${ this.baseUrl }ArtPieces/${ id }`, existingArtPiece);
+  }
+
   public getAllArtPieces(artPieceType: string): Observable<void> {
     return this.http.get<ArtPiece[]>(`${ this.baseUrl }ArtPieces?type=${ artPieceType }`).pipe(
       map((response: ArtPiece[]) => {
@@ -27,5 +31,13 @@ export class ArtPieceService {
         this.currentArtPiecesSource.next(artPieces);
       })
     );
+  }
+
+  public getArtPieceById(id: number): Observable<ArtPiece> {
+    return this.http.get<ArtPiece>(`${ this.baseUrl }ArtPieces/${ id }`);
+  }
+
+  public deleteArtPieceById(id: number): Observable<ArtPiece> {
+    return this.http.delete<ArtPiece>(`${ this.baseUrl }ArtPieces/${ id }`);
   }
 }

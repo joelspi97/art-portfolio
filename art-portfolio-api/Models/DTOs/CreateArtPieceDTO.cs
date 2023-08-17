@@ -19,5 +19,8 @@ namespace art_portfolio_api.Models.DTOs
 
         [Required]
         public int TypeId { get; set; }
+
+        [Required]
+        public IFormFile formFile { get; set; }
     }
 }
